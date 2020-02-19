@@ -27,6 +27,7 @@ ________
   * Keep track of their own score.
   * Roll a die, which will update their hold amount
   * Has a name to distinguish between human and bot
+  * Has a turn method that asks for input to roll or hold
 
 ### Collaborators
   * Instantiated in a game object
