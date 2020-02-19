@@ -1,11 +1,29 @@
 import random as rand
+import json
 from time import sleep
 
 ###############################################################
 
 
-def update_stats(game):
-    pass
+def update_stats(name):
+    with open('stats', 'r') as f:
+        loaded_stats = json.load(f)
+        if loaded_stats == '':
+            loaded_stats = {'Bot': 0, 'Human': 0}
+    loaded_stats[name] += 1
+    encoded_stats = json.JSONEncoder().encode(loaded_stats)
+    with open('stats', 'w') as f:
+        f.write(encoded_stats)
+
+
+def print_stats():
+    with open('stats', 'r') as f:
+        loaded_stats = json.load(f)
+        if loaded_stats == '':
+            loaded_stats = {'Bot': 0, 'Human': 0}
+    for key in loaded_stats:
+        print(f"====> Total {key} wins: {loaded_stats[key]} <====")
+    print('\n\n')
 
 
 def clear_stats():
@@ -15,6 +33,7 @@ def clear_stats():
 
 def center(value):
     return str(value).center(15)
+
 ##############################################################
 
 
@@ -71,8 +90,9 @@ class Game:
 {'*'*60}
 {'*'*60}
 """)
-        update_stats(self)
+        update_stats(self.winner.name)
         Game.last_winner = self.winner.name
+        print_stats()
         newgame = input("Play again? (y) or (n): ")
         while not(newgame == 'y' or newgame == 'n'):
             newgame = input("Play again? (y) or (n): ")
@@ -174,4 +194,5 @@ class Die:
 
 
 if __name__ == '__main__':
-    Game(6)
+    print_stats()
+    Game(88)
