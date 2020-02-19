@@ -11,7 +11,7 @@
   * Dice: game instantiates dice objects
 _________
 
-## Dice
+## Die
 ### Responisbilities
   * Stores the values (1-6)
   * Can "role" itself
@@ -25,7 +25,8 @@ ________
 ### Responisbilities
   * Keep track of their own score.
   * Roll a dice object
+  * Has a name to distinguish between human and bot
 
 ### Collaborators
   * Instantiated in a game object
-  * Roll a dice object
+  * Roll a die object
