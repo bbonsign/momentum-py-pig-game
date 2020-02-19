@@ -23,8 +23,9 @@ ________
 
 ## Player
 ### Responisbilities
+  * Knows their current hold amount, which is reset to 0 if they roll a pig
   * Keep track of their own score.
-  * Roll a dice object
+  * Roll a die, which will update their hold amount
   * Has a name to distinguish between human and bot
 
 ### Collaborators
