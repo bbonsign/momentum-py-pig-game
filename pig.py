@@ -1,4 +1,5 @@
 import random as rand
+from time import sleep
 
 ###############################################################
 
@@ -21,7 +22,7 @@ class Game:
     def __init__(self, die_size):
         self.die_size = die_size
         self.player1 = Player('Human')
-        self.player2 = Player('Bot')
+        self.player2 = Robot('Bot')
         self.die = Die(die_size)
         self.stop = False
         self.winner = 0
@@ -129,6 +130,7 @@ class Player:
             value = self.roll(die)
             if value == 1:
                 print(f"  {self.name} player rolled {value}. Now its the other player's turn\n")
+                sleep(1.3)
                 break
             print(f"  {self.name} player rolled {value}. The running total is {self.hold}\n")
             inp = input('  roll or hold?: ')
@@ -143,7 +145,21 @@ class Player:
 
 
 class Robot(Player):
-    pass
+    def turn(self, die):
+        while self.action == 'roll':
+            sleep(1)
+            value = self.roll(die)
+            if value == 1:
+                print(f"  {self.name} player rolled {value}. Now its the other player's turn\n")
+                break
+            print(f"  {self.name} player rolled {value}. The running total is {self.hold}\n")
+
+            if self.hold >= 20:
+                self.action = 'hold'
+                self.update_score()
+            else:
+                continue
+        self.action = 'roll'  # reset action so the next turn works the same
 
 
 class Die:
@@ -158,4 +174,4 @@ class Die:
 
 
 if __name__ == '__main__':
-    Game(100)
+    Game(6)
