@@ -17,7 +17,7 @@ def center(value):
 
 class Game:
     def __init__(self, die_size):
-        # self.die_size = die_size
+        self.die_size = die_size
         self.player1 = Player('Human')
         self.player2 = Player('Bot')
         self.die = Die(die_size)
@@ -45,8 +45,8 @@ class Game:
     def print_turn(self, player):
         player_announce = f"{player.name} player's turn"
         print(f"""
-{' '*11}{player_announce}
-{' '*11}{'='*len(player_announce)}\n""")
+{' '*20}{player_announce}
+{' '*20}{'='*len(player_announce)}\n""")
 
     def print_state(self):
         player1 = self.player1
@@ -61,7 +61,22 @@ class Game:
 """)
 
     def end_game(self):
-        pass
+        print(f"""
+{'*'*60}
+{'*'*60}
+{' '*11}The {self.winner} player is the winner!!!
+{'*'*60}
+{'*'*60}
+""")
+        update_stats(self)
+        Game.last_winner = self.winner.name
+        newgame = input("Play again? (y) or (n): ")
+        while not(newgame == 'y' or newgame == 'n'):
+            newgame = input("Play again? (y) or (n): ")
+        if newgame == 'n':
+            return
+        elif newgame == 'y':
+            Game(self.die_size)
 
     def update(self):
         die = self.die
@@ -141,4 +156,4 @@ class Die:
 
 
 if __name__ == '__main__':
-    Game(6)
+    Game(100)
