@@ -1,6 +1,8 @@
 import random as rand
 
 ###############################################################
+
+
 def update_stats(game):
     pass
 
@@ -130,7 +132,7 @@ class Player:
                 break
             print(f"  {self.name} player rolled {value}. The running total is {self.hold}\n")
             inp = input('  roll or hold?: ')
-            while not( inp == 'roll' or inp == 'hold'):
+            while not(inp == 'roll' or inp == 'hold'):
                 inp = input('  roll or hold?: ')
             if inp == 'hold':
                 self.action = 'hold'

@@ -1,5 +1,5 @@
 # import pytest
-from pig import Game, Player, Die
+from pig import Game, Player, Die, Robot
 
 VALUES = [i for i in range(1, 7)]
 
@@ -36,3 +36,10 @@ def test_roll_die():
 def test_player_roll():
     player = Player('Human')
     player.roll(Die(6))
+
+
+def test_robot():
+    bot = Robot('bot')
+    assert isinstance(bot, Robot)
+    assert isinstance(bot, Player)
+    assert bot.name == 'bot'
