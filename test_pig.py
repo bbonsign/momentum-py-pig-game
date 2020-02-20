@@ -1,5 +1,5 @@
 # import pytest
-from pig import Game, Player, Die, Robot
+from pig import Player, Die, Robot  # Game
 
 VALUES = [i for i in range(1, 7)]
 

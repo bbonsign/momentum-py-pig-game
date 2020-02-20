@@ -1,40 +1,11 @@
 import random as rand
-import json
 from time import sleep
-
-###############################################################
-
-
-def update_stats(name):
-    with open('stats', 'r') as f:
-        loaded_stats = json.load(f)
-        if loaded_stats == '':
-            loaded_stats = {'Bot': 0, 'Human': 0}
-    loaded_stats[name] += 1
-    encoded_stats = json.JSONEncoder().encode(loaded_stats)
-    with open('stats', 'w') as f:
-        f.write(encoded_stats)
+from game_stats import update_stats, print_stats, clear_stats
 
 
-def print_stats():
-    with open('stats', 'r') as f:
-        loaded_stats = json.load(f)
-        if loaded_stats == '':
-            loaded_stats = {'Bot': 0, 'Human': 0}
-    for key in loaded_stats:
-        print(f"====> Total {key} wins: {loaded_stats[key]} <====")
-    print('\n\n')
-
-
-def clear_stats():
-    with open('stats', 'w') as f:
-        f.write('')
-
-
+# For formatting some of the print statements
 def center(value):
     return str(value).center(15)
-
-##############################################################
 
 
 class Game:
@@ -83,6 +54,7 @@ class Game:
 """)
 
     def end_game(self):
+        sleep(1)
         print(f"""
 {'*'*60}
 {'*'*60}
@@ -93,6 +65,7 @@ class Game:
         update_stats(self.winner.name)
         Game.last_winner = self.winner.name
         print_stats()
+        sleep(.7)
         newgame = input("Play again? (y) or (n): ")
         while not(newgame == 'y' or newgame == 'n'):
             newgame = input("Play again? (y) or (n): ")
@@ -193,6 +166,29 @@ class Die:
         return rand.choice(self.values)
 
 
-if __name__ == '__main__':
-    print_stats()
-    Game(88)
+# if __name__ == '__main__':
+#     print_stats()
+#     Game(88)
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Game of pig against a bot. Keeps tracks of wins',
+                                     epilog='Oink! Oink!')
+    parser.add_argument('mode', type=str, action='store', nargs='?',
+                        default="play",
+                        help="Defaults to 'play' to play a game of Pig against a bot, or 'stats' to view game statistics")
+    # parser.add_argument('stats', type=str, help='View game statistics')
+    parser.add_argument('-r', '--reset', action='store_true', help='Reset game statistics')
+    args = parser.parse_args()
+
+    if args.reset:
+        clear_stats()
+
+    if args.mode == 'play':
+        Game(6)
+    elif args.mode == 'stats':
+        print_stats()
+    else:
+        print("Invalid arguments")
+        exit(1)
