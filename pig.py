@@ -151,7 +151,7 @@ class Player:
         while self.action == 'roll':
             value = self.roll(die)
             if value == 1:
-                print(f"  {self.name} player rolled {value}. Now its the other player's turn\n")
+                print(f"  {self.name} player rolled a pig. Now its the other player's turn\n")
                 sleep(1.3)
                 break
             print(f"  {self.name} player rolled {value}. The running total is {self.hold}\n")
@@ -175,7 +175,7 @@ class Bot(Player):
             sleep(1)
             value = self.roll(die)
             if value == 1:
-                print(f"  {self.name} player rolled {value}. Now its the other player's turn\n")
+                print(f"  {self.name} player rolled a pig. Now its the other player's turn\n")
                 break
             print(f"  {self.name} player rolled {value}. The running total is {self.hold}\n")
 
@@ -204,7 +204,7 @@ class Robot(Player):
             sleep(1)
             value = self.roll(die)
             if value == 1:
-                print(f"  {self.name} player rolled {value}. Now its the other player's turn\n")
+                print(f"  {self.name} player rolled a pig. Now its the other player's turn\n")
                 break
             print(f"  {self.name} player rolled {value}. The running total is {self.hold}\n")
 
@@ -243,7 +243,6 @@ if __name__ == "__main__":
     parser.add_argument('mode', type=str, action='store', nargs='?',
                         default="play",
                         help="Defaults to 'play' to play a game of Pig against a bot, or 'stats' to view game statistics")
-    # parser.add_argument('stats', type=str, help='View game statistics')
     parser.add_argument('-r', '--reset', action='store_true', help='Reset game statistics')
     args = parser.parse_args()
 
@@ -251,7 +250,7 @@ if __name__ == "__main__":
         clear_stats()
 
     if args.mode == 'play':
-        Game(50)
+        Game(6)
     elif args.mode == 'stats':
         print_stats()
     else:
