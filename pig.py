@@ -12,7 +12,7 @@ class Game:
     def __init__(self, die_size):
         self.die_size = die_size
         self.player1 = Player('Human')
-        self.player2 = Robot('Bot')
+        self.player2 = Robot()
         self.die = Die(die_size)
         self.stop = False
         self.winner = 0
@@ -138,6 +138,9 @@ class Player:
 
 
 class Robot(Player):
+    def __init__(self):
+        super().__init__('Bot')
+
     def turn(self, die):
         while self.action == 'roll':
             sleep(1)
@@ -147,7 +150,11 @@ class Robot(Player):
                 break
             print(f"  {self.name} player rolled {value}. The running total is {self.hold}\n")
 
-            if self.hold >= 20:
+            threshold = rand.randint(15, 30)
+            if self.score+self.hold >= 100:
+                self.action = 'hold'
+                self.update_score()
+            elif self.hold >= threshold:
                 self.action = 'hold'
                 self.update_score()
             else:
@@ -157,6 +164,7 @@ class Robot(Player):
 
 class Die:
     def __init__(self, sides):
+
         self.values = [i for i in range(1, sides+1)]
 
     def __str__(self):

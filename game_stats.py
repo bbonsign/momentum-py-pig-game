@@ -26,6 +26,7 @@ def update_stats(name):
 def center(value):
     return str(value).center(15)
 
+
 def make_stars(n):
     return '*'*n
 

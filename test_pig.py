@@ -39,7 +39,7 @@ def test_player_roll():
 
 
 def test_robot():
-    bot = Robot('bot')
+    bot = Robot()
     assert isinstance(bot, Robot)
     assert isinstance(bot, Player)
-    assert bot.name == 'bot'
+    assert bot.name == 'Bot'
