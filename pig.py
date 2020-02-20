@@ -2,6 +2,16 @@ import random as rand
 from time import sleep
 from game_stats import update_stats, print_stats, clear_stats
 
+OPPONENTS = ['Bot', 'Bot15', 'Bot20', 'Bot25', 'Bot30', 'Bot35']
+OPENING_TEXT = """
+- Bot
+- Bot15
+- Bot20
+- Bot25
+- Bot30
+- Bot35
+Name your opponent: """
+
 
 # For formatting some of the print statements
 def center(value):
@@ -12,7 +22,7 @@ class Game:
     def __init__(self, die_size):
         self.die_size = die_size
         self.player1 = Player('Human')
-        self.player2 = Robot()
+        # self.player2 = Bot()
         self.die = Die(die_size)
         self.stop = False
         self.winner = 0
@@ -29,10 +39,29 @@ class Game:
         otherwise the previous loser starts
         """
         if Game.last_winner is None:
+            opponent = input(OPENING_TEXT)
+            while opponent not in OPPONENTS:
+                opponent = input(OPENING_TEXT)
+            if opponent == 'Bot':
+                self.player2 = Bot()
+            else:
+                self.player2 = Robot(opponent)
+
             if rand.choice([0, 1]) == 1:
                 self.player1, self.player2 = self.player2, self.player1
         elif Game.last_winner == 'Human':
+            opponent = input(OPENING_TEXT)
+            while opponent not in OPPONENTS:
+                opponent = input(OPENING_TEXT)
+            risk = opponent.split('Bot')[1]
+            if risk == '':
+                self.player2 = Bot()
+            else:
+                self.player2 = Robot(str(risk))
             self.player1, self.player2 = self.player2, self.player1
+        else:
+            self.player2 = Robot(Game.last_winner)
+
         self.update()
 
     def print_turn(self, player):
@@ -137,7 +166,7 @@ class Player:
         self.action = 'roll'  # reset action so the next turn works the same
 
 
-class Robot(Player):
+class Bot(Player):
     def __init__(self):
         super().__init__('Bot')
 
@@ -155,6 +184,34 @@ class Robot(Player):
                 self.action = 'hold'
                 self.update_score()
             elif self.hold >= threshold:
+                self.action = 'hold'
+                self.update_score()
+            else:
+                continue
+        self.action = 'roll'  # reset action so the next turn works the same
+
+
+class Robot(Player):
+    '''
+    Possible names of the form: Bot##
+    '''
+    def __init__(self, name):
+        super().__init__(name)
+        self.threshold = int(self.name.split('Bot')[1])
+
+    def turn(self, die):
+        while self.action == 'roll':
+            sleep(1)
+            value = self.roll(die)
+            if value == 1:
+                print(f"  {self.name} player rolled {value}. Now its the other player's turn\n")
+                break
+            print(f"  {self.name} player rolled {value}. The running total is {self.hold}\n")
+
+            if self.score + self.hold >= 100:
+                self.action = 'hold'
+                self.update_score()
+            elif self.hold >= self.threshold:
                 self.action = 'hold'
                 self.update_score()
             else:
@@ -194,7 +251,7 @@ if __name__ == "__main__":
         clear_stats()
 
     if args.mode == 'play':
-        Game(6)
+        Game(50)
     elif args.mode == 'stats':
         print_stats()
     else:

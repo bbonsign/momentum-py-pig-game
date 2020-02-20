@@ -17,7 +17,7 @@ def update_stats(name):
     check_empty()
     with open('stats', 'r') as f:
         loaded_stats = json.load(f)
-    loaded_stats[name] += 1
+    loaded_stats[name] = loaded_stats.get(name, 0) + 1
     encoded_stats = json.JSONEncoder().encode(loaded_stats)
     with open('stats', 'w') as f:
         f.write(encoded_stats)
@@ -36,9 +36,10 @@ def print_stats():
     with open('stats', 'r') as f:
         loaded_stats = json.load(f)
     print()
-    for key in loaded_stats:
-        key_text = f"==> Total {key} wins:".rjust(23)
-        print(f"{key_text} {loaded_stats[key]} | {make_stars(loaded_stats[key])}")
+
+    for name, count in sorted(loaded_stats.items(), key=lambda item: item[1], reverse=True):
+        name_text = f"==> Total {name} wins:".rjust(23)
+        print(f"{name_text} {count} | {make_stars(count)}")
     print('\n')
 
 
