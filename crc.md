@@ -9,6 +9,7 @@
 ### Collaborators
   * Players: Game can get scores to compare
   * Dice: game instantiates dice objects
+
 _________
 
 ## Die
@@ -32,3 +33,13 @@ ________
 ### Collaborators
   * Instantiated in a game object
   * Roll a die object
+
+________
+
+## Robot and Bot
+### Responisbilities
+  * Inheret from player.
+  * Different behaviors (risk-levels), identified in their name, including one with random thresholds for holding.
+
+### Collaborators
+  * Chosen by human player when a game starts
