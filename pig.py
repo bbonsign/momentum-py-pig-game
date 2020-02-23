@@ -66,31 +66,27 @@ class Game:
 
     def print_turn(self, player):
         player_announce = f"{player.name} player's turn"
-        print(f"""
-{' '*20}{player_announce}
-{' '*20}{'='*len(player_announce)}\n""")
+        print(f"{' '*20}{player_announce}")
+        print(f"{' '*20}{'='*len(player_announce)}\n")
 
     def print_state(self):
         player1 = self.player1
         player2 = self.player2
-        print(f"""
-{'_'*60}\n
-{' '*11}{' '*14}{'Totals:'}
-{' '*11}{'='*33}
-{' '*11}|{center(player1.name)}||{center(player2.name)}|
-{' '*11}|{center(player1.score)}||{center(player2.score)}|
-{' '*11}{'='*33}
-""")
+
+        print(f"{'_'*60}\n")
+        print(f"{' '*11}{' '*14}{'Totals:'}")
+        print(f"{' '*11}{'='*33}")
+        print(f"{' '*11}|{center(player1.name)}||{center(player2.name)}|")
+        print(f"{' '*11}|{center(player1.score)}||{center(player2.score)}|")
+        print(f"{' '*11}{'='*33}")
+
 
     def end_game(self):
         sleep(1)
-        print(f"""
-{'*'*60}
-{'*'*60}
-{' '*11}The {self.winner} player is the winner!!!
-{'*'*60}
-{'*'*60}
-""")
+        print(f"{'*'*60}\n{'*'*60}")
+        print(f"{' '*11}The {self.winner} player is the winner!!!")
+        print(f"{'*'*60}\n{'*'*60}")
+
         update_stats(self.winner.name)
         Game.last_winner = self.winner.name
         print_stats()
