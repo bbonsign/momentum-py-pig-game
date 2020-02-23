@@ -75,10 +75,10 @@ class Game:
 
         print(f"{'_'*60}\n")
         print(f"{' '*11}{' '*14}{'Totals:'}")
-        print(f"{' '*11}{'='*33}")
+        print(f"{' '*11}{'='*34}")
         print(f"{' '*11}|{center(player1.name)}||{center(player2.name)}|")
         print(f"{' '*11}|{center(player1.score)}||{center(player2.score)}|")
-        print(f"{' '*11}{'='*33}")
+        print(f"{' '*11}{'='*34}")
 
 
     def end_game(self):
